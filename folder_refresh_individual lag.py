@@ -2,7 +2,7 @@
 """
 Created on Wed Dec 23 12:09:09 2020
 
-@author: s0046998
+@author: Mam1004
 """
 
 import win32com.client
