@@ -12,11 +12,11 @@ import glob
 
 # for WorkingFile in os.listdir("C:\\Users\\techy\\OneDrive\\Desktop\\python\\Data_files\\cust-geo"):
 
-File_path=r"\\rgare.net\stlusop\Claims\Reporting\Lags-Individual\Test"
+File_path=r"C:\\Users\\techy\\OneDrive\\Desktop\\python\\Data_files\\cust-geo"
 os.chdir(File_path)
 xlapp = win32com.client.DispatchEx("Excel.Application")
 names=[]
-for FileList in glob.glob('ADJ - Individual Lag.xlsm'):
+for FileList in glob.glob('*.xlsm'):
     if  not FileList.startswith('~$')  :
         names.append(FileList)
   
