@@ -1,0 +1,30 @@
+$Path = "U:\Shared\SQL\Claims\Queries-Weekly"
+$Text = "ASMDRETRo='R'","ASMDRETRO = 'R'","ASMDRETRO ='R'"
+$PathArray = @()
+$Results = "M:\test_lag\abc.txt"
+
+
+# This code snippet gets all the files in $Path that end in ".txt".
+Get-ChildItem $Path -Recurse "*.sql" |
+Where-Object { $_.Attributes -ne "Directory"} |
+ForEach-Object {
+If (Get-Content $_.FullName | Select-String -Pattern $Text) {
+$PathArray += $_.FullName
+$PathArray += $_.FullName
+}
+}
+Write-Host "Contents of ArrayPath:"
+#$PathArray | ForEach-Object {$_} 
+$PathArray | % {$_} | Out-File $Results
+
+
+
+###################################################################################
+
+$searchWords = "ASMDRETRO='R'","ASMDRETRO = 'R'","ASMDRETRO ='R'"
+Foreach ($sw in $searchWords)
+{
+    Get-Childitem -Path "U:\Shared\SQL\Claims\Queries-Weekly" -Recurse -include "*.sql"| 
+    Select-String -Pattern "$sw" | 
+    Select Path,LineNumber,@{n='SearchWord';e={$sw}}
+}
