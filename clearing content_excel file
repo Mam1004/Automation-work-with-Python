@@ -1,0 +1,28 @@
+#Before running this copy the Dcember file to intial
+
+import openpyxl
+import win32com.client
+import os
+import glob
+# import time
+
+# for WorkingFile in os.listdir("C:\\Users\\techy\\OneDrive\\Desktop\\python\\Data_files\\cust-geo"):
+
+File_path=r"U:\Shared\Reports\Management Reporting Results\Business Objects\Data Connections\Admin\Management\Monthly\Suspense Goal"
+os.chdir(File_path)
+#xlapp = win32com.client.DispatchEx("Excel.Application")
+
+
+for FileList in glob.glob('*.xlsx'):
+    if  not FileList.startswith('Initial') and  not FileList.startswith('~$')  :
+       wb=  openpyxl.load_workbook(File_path+"\\"+FileList)
+       sheet =wb['Report 1']
+       print("File delete"+FileList)
+       #sheet.insert_cols(idx=1)
+       #sheet.delete_cols(1,23)
+       sheet.delete_rows(2,sheet.max_row-1)
+
+       #sheet.border = square_border
+       wb.save(FileList) #you can save it after if you like
+
+       
