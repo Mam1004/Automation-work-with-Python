@@ -1,0 +1,52 @@
+
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Oct 20 17:41:53 2020
+
+@author: techy
+"""
+import numpy as np 
+import pandas as pd
+import sys
+from io import StringIO
+# import regex as re
+# import re
+fname="C:\\Users\\techy\\OneDrive\\Desktop\\python\\Data_files\\primerica_file.txt"
+
+
+def find_pos():
+    
+    return    
+
+############################################ 
+file = open(fname,"r") 
+
+path = "C:\\Users\\techy\\OneDrive\\Desktop\\python\\Data_files\\data1.xlsx"
+writer = pd.ExcelWriter(path, engine = 'xlsxwriter')
+
+with file as fin:
+    fin.seek(117)
+    data = fin.read(550)
+TESTDATA=StringIO(data)
+df = pd.read_csv(TESTDATA, sep="\t")
+
+df1=df.set_axis(['polid', 'insid', 'name','trtyid', 'billno', 'date', 'Stmtid','AAR','',], axis='columns', inplace=False)
+print(df1)
+df1.to_excel(writer, sheet_name ='Sheet1')
+
+# #########################################
+
+file2 = open(fname,"r") 
+
+with file2 as fin2:
+    fin2.seek(695)
+    data2 = fin2.read(800)
+TESTDATA2=StringIO(data2)
+df2 = pd.read_csv(TESTDATA2, sep="\t")
+df3=df2.set_axis(['polid', 'insid', 'name','trtyid', 'billno', 'date', 'Stmtid','AAR','',], axis='columns', inplace=False)
+print(df3)
+df3.to_excel(writer, sheet_name ='Sheet2')
+
+writer.save()
+writer.close()
+
