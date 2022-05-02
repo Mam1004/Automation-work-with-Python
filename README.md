@@ -11,3 +11,7 @@ All these codes are for work automation of excel files using python and handles 
 4>Doing search in multiple pdf document at the same time
 
 5>converting text format data to excel
+
+6>![image](https://user-images.githubusercontent.com/77121389/166327205-b749bac3-b01a-4cef-b813-7f9b2774748f.png)
+Getting data from salesforce report to folders
+
