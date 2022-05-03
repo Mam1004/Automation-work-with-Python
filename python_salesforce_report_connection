@@ -4,16 +4,31 @@ import requests
 import pandas as pd
 import csv
 from io import StringIO
-# Sign into Salesforce
-sf = Salesforce(username='mamta.chaudhary@veriforce.com', 
-password='Mickle@1004',
-security_token='gxVOZWZd4oCbjZm0u3sNLziDk')
-# Set report details
-sf_org = 'https://pecsafety.lightning.force.com/'
-report_id = '00O5W000000W6VvUAK'
-export_params = '?isdtp=p1&export=1&enc=UTF-8&xf=csv'
-# Download report
-sf_report_url = sf_org + report_id + export_params
-response = requests.get(sf_report_url, headers=sf.headers, cookies={'sid': sf.session_id})
-new_report = response.content.decode('utf-8')
-report_df = pd.read_csv(StringIO(new_report))
+
+
+report_dict={'CM-New/NFO':'00O5W000000W6cIUAS','CM-NFE':'00O5W000000W6eiUAC','CM-Activation Fee':'00O5W000000W6exUAC'
+             ,'CM-New Connection':'00O5W000000W6edUAC'}
+Final_report= pd.DataFrame([])
+#report_df=pd.DataFrame([])
+for key, value in report_dict.items():
+        # Sign into Salesforce
+        report_df=pd.DataFrame([])
+        sf = Salesforce(username='mamta.chaudhary@veriforce.com', 
+        password='Mickle@1004',
+        security_token='gxVOZWZd4oCbjZm0u3sNLziDk')
+        # Set report details
+        sf_org = 'https://pecsafety.lightning.force.com/'
+        report_id = value
+        export_params = '?isdtp=p1&export=1&enc=UTF-8&xf=csv'
+        # Download report
+        sf_report_url = sf_org + report_id + export_params
+        response = requests.get(sf_report_url, headers=sf.headers, cookies={'sid': sf.session_id})
+        new_report = response.content.decode('utf-8')
+        report_df = pd.read_csv(StringIO(new_report))
+        report_df['Type']=key
+        Final_report=Final_report.append(report_df)
+        #print(Final_report)
+Final_report=Final_report[~Final_report['Total Price'].isna()]
+Final_report
+
+Final_report.to_csv(r'C:/Users/Mamta/Desktop/In_Work/Data_Connection/report_df.csv')
