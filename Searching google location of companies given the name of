@@ -1,0 +1,36 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue May 30 17:45:08 2023
+
+@author: Mamta
+"""
+
+import requests
+import json
+
+Address=[
+
+"Northern Natural Gas Texas USA",
+"Northern Natural Gas Oklahoma USA",
+"Northern Natural Gas Kansas USA",
+"NUEVO MIDSTREAM Texas USA",
+"TABULA RASA ENERGY Texas USA",
+"TABULA RASA ENERGY Colorado USA",
+"Third Coast Texas USA",
+
+]
+
+for i in Address:
+   url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address&input={0}&inputtype=textquery&language=en&key=AIzaSyDjGlXtX4I_drVUAnfttBkc0adTVaQqYUs&API_KEY=AIzaSyDjGlXtX4I_drVUAnfttBkc0adTVaQqYUs".format(i)
+
+   payload = {}
+   headers = {
+  'Accept': 'application/json'
+   }
+
+   response = requests.request("GET", url, headers=headers, data=payload)
+
+   userdata = json.loads(response.text)
+   name = userdata["candidates"][0]
+
+   print(i,":",name['formatted_address'])
