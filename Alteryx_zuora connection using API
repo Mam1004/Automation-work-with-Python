@@ -18,7 +18,7 @@ export_url = "https://api.zuora.com/rest/v1/action/query"
 old_report_id = "2c9180838e7429d6018ebc6c8bde41f6"
 
 # Zuora credentials
-username = "mamta.chaudhary@veriforce.com_10001574"
+username = "mamta.chaudhary"
 password = "aa.MC03282022$"
 
 # Refresh the report using the old report ID
