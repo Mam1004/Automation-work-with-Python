@@ -1,0 +1,16 @@
+from simple_salesforce import Salesforce
+import pandas as pd
+
+sf = Salesforce (
+    username = 'mamta.chaudhary@veriforce.com',
+    password = "-------",
+    security_token = "gxVOZWZd4oCbjZm0u3sNLziDk",
+    instance_url = "https://pecsafety.lightning.force.com/"
+)
+
+df_oppo = pd.DataFrame(
+  sf.query(
+    "SELECT Id, Name FROM Account WHERE Name = 'Harris Corp'"
+)['records'])
+
+print(df_oppo[['Id','Name']])
