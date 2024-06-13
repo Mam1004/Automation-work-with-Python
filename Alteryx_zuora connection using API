@@ -1,0 +1,62 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Apr  8 01:40:20 2024
+
+@author: Mamta
+"""
+
+import requests
+import csv
+
+# Zuora API endpoint for report refresh
+refresh_url = "https://api.zuora.com/rest/v1/action/refresh"
+
+# Zuora API endpoint for report export
+export_url = "https://api.zuora.com/rest/v1/action/query"
+
+# Zuora report ID (old report ID)
+old_report_id = "2c9180838e7429d6018ebc6c8bde41f6"
+
+# Zuora credentials
+username = "mamta.chaudhary@veriforce.com_10001574"
+password = "aa.MC03282022$"
+
+# Refresh the report using the old report ID
+refresh_payload = {
+    "format": "csv",
+    "reportId": old_report_id,
+    "username": username,
+    "password": password
+}
+
+headers = {
+    "Content-Type": "application/json"
+}
+
+response = requests.post(refresh_url, json=refresh_payload, headers=headers)
+refresh_status = response.json()
+
+# Check if report refresh is successful
+if refresh_status.get("success"):
+    # Retrieve the new report ID
+    new_report_id = refresh_status.get("reportId")
+    
+    # Report refresh successful, retrieve the data using the new report ID
+    export_payload = {
+        "format": "csv",
+        "reportId": new_report_id,
+        "username": username,
+        "password": password
+    }
+    
+    export_response = requests.post(export_url, json=export_payload, headers=headers)
+    report_data = export_response.text
+    
+    # Write the data to a CSV file
+    with open("zuora_report.csv", "w", newline="", encoding="utf-8") as csv_file:
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(report_data.splitlines())
+        
+    print("Zuora report exported successfully to zuora_report.csv")
+else:
+    print("Failed to refresh Zuora report")
