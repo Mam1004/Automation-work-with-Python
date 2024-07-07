@@ -34,3 +34,29 @@ for i in Address:
    name = userdata["candidates"][0]
 
    print(i,":",name['formatted_address'])
+
+
+
+###OR 
+import requests
+from bs4 import BeautifulSoup
+
+company = 'google'
+
+url = 'http://www.corporate-office-headquarters.com/search-static?term={c}&page=1&rows=200'.format(c=company)
+
+r = requests.get(url)
+
+soup = BeautifulSoup(r.text, 'html.parser')
+
+endpoint = soup.find('a', href=True, attrs={'class': "match-result-anchor"})['href']
+
+url = 'http://www.corporate-office-headquarters.com/{ep}'.format(ep=endpoint)
+
+r = requests.get(url)
+
+soup = BeautifulSoup(r.text, 'html.parser')
+
+HQ_address = soup.find_all('dd')[2]   # locate the Address Tag
+
+print(HQ_address.text) 
